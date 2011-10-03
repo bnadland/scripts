@@ -1,0 +1,2 @@
+#!/bin/sh
+ffmpeg -f x11grab -s 1024x600 -r 10 -i :0.0 -s 1024x600 -r 10 -sameq "$1"
