@@ -1,0 +1,37 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use Data::Dumper;
+use DBI;
+
+my $dbh;
+my $sth;
+my $result;
+my $row;
+
+if(@ARGV < 1) {
+	say "Usage: pinfo <package>";
+	exit;
+};
+
+$dbh = DBI->connect("dbi:SQLite:/usr/local/share/sqlports-compact");
+
+$sth = $dbh->prepare("SELECT fullpkgpath FROM Ports WHERE fullpkgname LIKE ?");
+$sth->bind_param(1, "$ARGV[0]%");
+$result = $dbh->selectcol_arrayref($sth);
+
+foreach my $id (@$result) {
+	$sth = $dbh->prepare("SELECT Ports.FULLPKGNAME, Ports.HOMEPAGE, Descr.VALUE FROM Ports, Descr WHERE Ports.FULLPKGPATH = ? AND Descr.FULLPKGPATH = ?");
+	$sth->bind_param(1, $id);
+	$sth->bind_param(2, $id);
+	$sth->execute;
+	$row = $sth->fetchrow_hashref;
+	say "-> " .$row->{"FULLPKGNAME"} . " (". $row->{"HOMEPAGE"} . ")";
+	say $row->{"VALUE"};
+};
+
+$sth->finish;
+$dbh->disconnect;
