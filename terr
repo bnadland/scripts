@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+if (@ARGV > 0) {
+  foreach my $filename (@ARGV) {
+    open my $file, $filename or die $!;
+    while (<$file>) {
+      print STDERR $_;
+      print STDOUT $_;
+    }
+  }
+}
+else {
+  while (<STDIN>) {
+    print STDERR $_;
+    print STDOUT $_;
+  }
+}
