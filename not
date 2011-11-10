@@ -3,6 +3,9 @@
 use strict;
 use warnings;
 
+# use autoflush
+$| = 1;
+
 sub contains_argument {
   my $line = shift;
 
