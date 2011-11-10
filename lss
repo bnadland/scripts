@@ -1,0 +1,2 @@
+#!/bin/sh
+ls -lh "$@" | awk '{ print $5 "\t" $9 }'
