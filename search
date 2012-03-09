@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+my $query = join '%20', map { qq/$_/ } @ARGV;
+say $query;
+
+`firefox https://encrypted.google.com/search?q=$query`
