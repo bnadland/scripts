@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use File::Slurp;
+
+sub usage {
+	say "Usage: reverse <filenames>";
+}
+
+unless (@ARGV > 1) {
+	usage();
+	exit();
+}
+
+foreach my $file (@ARGV) {
+	my @lines = read_file($file);
+	foreach my $line (reverse @lines) {
+		print $line;
+	}
+}
