@@ -10,7 +10,7 @@ sub usage {
 	say "Usage: reverse <filenames>";
 }
 
-unless (@ARGV > 1) {
+unless (@ARGV > 0) {
 	usage();
 	exit();
 }
